@@ -11,11 +11,13 @@ function saveData() {
   localStorage.setItem('vehicles', JSON.stringify(vehicles));
 }
 function login(username, password) {
-  if (USERS[username] === password) {
-    currentUser = username;
-    document.getElementById('login').classList.add('d-none');
-    document.getElementById('app').classList.remove('d-none');
-    document.getElementById('userWelcome').textContent = `Welcome, ${username}`;
+  const user = username.trim()
+  const pass = password.trim()
+  if (USERS[user] === pass) {
+    currentUser = user
+    document.getElementById('login').classList.add('d-none')
+    document.getElementById('app').classList.remove('d-none')
+    document.getElementById('userWelcome').textContent = `Welcome, ${user}`
     renderList();
   } else {
     alert('Invalid credentials');
@@ -118,8 +120,15 @@ async function lookupVin(){
   }
 }
 
-document.getElementById('loginBtn').onclick=()=>login(document.getElementById('username').value, document.getElementById('password').value);
-document.getElementById('logoutBtn').onclick=logout;
-document.getElementById('resetBtn').onclick=reset;
-document.getElementById('lookupBtn').onclick=lookupVin;
-loadData();
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('loginBtn').addEventListener('click', () =>
+    login(
+      document.getElementById('username').value.trim(),
+      document.getElementById('password').value.trim()
+    )
+  )
+  document.getElementById('logoutBtn').addEventListener('click', logout)
+  document.getElementById('resetBtn').addEventListener('click', reset)
+  document.getElementById('lookupBtn').addEventListener('click', lookupVin)
+  loadData()
+})
