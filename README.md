@@ -106,4 +106,4 @@ MIT
 
 ## Reconditioning Tool
 
-A static demo of a vehicle reconditioning tracker is included in `public/recon-tool`. Open `public/recon-tool/index.html` in your browser to try it out. The tool is behind a simple login screen—use `admin/admin` or `user/user` to sign in. It stores data in browser storage and offers VIN lookup, stage tracking, cost inputs, and parts management.
+A static demo of a vehicle reconditioning tracker is included in `public/recon-tool`. Open `public/recon-tool/index.html` in your browser to try it out. The tool loads immediately with no login required. It stores data in browser storage and offers VIN lookup, stage tracking, cost inputs, and parts management.

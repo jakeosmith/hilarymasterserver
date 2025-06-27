@@ -1,6 +1,4 @@
 const STAGES = ["Arrival","Inspection","Mechanical","Detail","Photos","Online"];
-const USERS = {admin:"admin", user:"user"};
-let currentUser = null;
 let vehicles = [];
 
 function loadData() {
@@ -9,24 +7,6 @@ function loadData() {
 }
 function saveData() {
   localStorage.setItem('vehicles', JSON.stringify(vehicles));
-}
-function login(username, password) {
-  const user = username.trim()
-  const pass = password.trim()
-  if (USERS[user] === pass) {
-    currentUser = user
-    document.getElementById('login').classList.add('d-none')
-    document.getElementById('app').classList.remove('d-none')
-    document.getElementById('userWelcome').textContent = `Welcome, ${user}`
-    renderList();
-  } else {
-    alert('Invalid credentials');
-  }
-}
-function logout() {
-  currentUser = null;
-  document.getElementById('app').classList.add('d-none');
-  document.getElementById('login').classList.remove('d-none');
 }
 function reset() {
   localStorage.removeItem('vehicles');
@@ -121,14 +101,8 @@ async function lookupVin(){
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('loginBtn').addEventListener('click', () =>
-    login(
-      document.getElementById('username').value.trim(),
-      document.getElementById('password').value.trim()
-    )
-  )
-  document.getElementById('logoutBtn').addEventListener('click', logout)
   document.getElementById('resetBtn').addEventListener('click', reset)
   document.getElementById('lookupBtn').addEventListener('click', lookupVin)
   loadData()
+  renderList()
 })
