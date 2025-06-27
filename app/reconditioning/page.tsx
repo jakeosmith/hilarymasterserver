@@ -22,8 +22,14 @@ export default function Reconditioning() {
       const res = await fetch(
         `https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/${vin}?format=json`
       )
-      const data = await res.json()
-      const result = data.Results?.[0] || {}
+      const data = (await res.json()) as {
+        Results?: Array<{
+          ModelYear?: string
+          Make?: string
+          Model?: string
+        }>
+      }
+      const result = data.Results?.[0] ?? {}
       setVehicleInfo({
         vin,
         year: result.ModelYear || "",
