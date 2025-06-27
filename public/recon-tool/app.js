@@ -1,4 +1,8 @@
 const STAGES = ["Arrival","Inspection","Mechanical","Detail","Photos","Online"];
+const SAMPLE_VINS = {
+  "1HGCM82633A004352": { ModelYear: "2003", Make: "Honda", Model: "Accord" },
+  "1FTFW1ET1EKF51234": { ModelYear: "2014", Make: "Ford", Model: "F-150" },
+};
 let vehicles = [];
 
 function loadData() {
@@ -96,7 +100,16 @@ async function lookupVin(){
     renderList();
     selectVehicle(vin);
   }catch(e){
-    alert('Failed to decode VIN');
+    const stub=SAMPLE_VINS[vin];
+    if(stub){
+      const vehicle={vin,year:stub.ModelYear,make:stub.Make,model:stub.Model,stage:'Arrival',laborCost:0,partsCost:0,total:0,parts:[]};
+      vehicles.push(vehicle);
+      saveData();
+      renderList();
+      selectVehicle(vin);
+    }else{
+      alert('Failed to decode VIN');
+    }
   }
 }
 
