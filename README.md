@@ -103,3 +103,7 @@ MIT
 
 
 [docs]: https://docs.blazity.com/next-enterprise/deployments/enterprise-cli
+
+## Reconditioning Tool
+
+A static demo of a vehicle reconditioning tracker is included in `public/recon-tool`. Open `public/recon-tool/index.html` in your browser to try it out. It stores data in browser storage and offers VIN lookup, stage tracking, cost inputs, and parts management.
