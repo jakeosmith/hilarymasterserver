@@ -4,6 +4,7 @@ const SAMPLE_VINS = {
   "1FTFW1ET1EKF51234": { ModelYear: "2014", Make: "Ford", Model: "F-150" },
 };
 let vehicles = [];
+let selectedVin = null;
 
 function loadData() {
   const data = localStorage.getItem('vehicles');
@@ -24,6 +25,7 @@ function renderList() {
   vehicles.forEach(v => {
     const li = document.createElement('li');
     li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    if (selectedVin === v.vin) li.classList.add('active');
     li.textContent = `${v.vin} - ${v.year} ${v.make} ${v.model}`;
     const badge = document.createElement('span');
     badge.className = 'badge bg-secondary stage-badge';
@@ -36,6 +38,7 @@ function renderList() {
 function selectVehicle(vin) {
   const vehicle = vehicles.find(v => v.vin === vin);
   if (!vehicle) return;
+  selectedVin = vin;
   document.getElementById('detailPane').style.display='block';
   document.getElementById('vinHeading').textContent = `${vehicle.vin} - ${vehicle.year} ${vehicle.make} ${vehicle.model}`;
   document.getElementById('stageSelect').value = vehicle.stage;
@@ -43,15 +46,31 @@ function selectVehicle(vin) {
   document.getElementById('partsCost').value = vehicle.partsCost || 0;
   document.getElementById('totalCost').value = (Number(vehicle.laborCost||0)+Number(vehicle.partsCost||0)).toFixed(2);
   renderParts(vehicle);
-  document.getElementById('stageSelect').onchange = (e)=> { vehicle.stage = e.target.value; saveData(); renderList(); };
+  document.getElementById('stageSelect').onchange = (e)=> {
+    vehicle.stage = e.target.value;
+    saveData();
+    renderList();
+    updateProgress(vehicle);
+  };
   document.getElementById('laborCost').oninput = (e)=> { vehicle.laborCost = parseFloat(e.target.value||'0'); updateTotal(vehicle); };
   document.getElementById('partsCost').oninput = (e)=> { vehicle.partsCost = parseFloat(e.target.value||'0'); updateTotal(vehicle); };
   document.getElementById('addPart').onclick = ()=> addPart(vehicle);
+  updateProgress(vehicle);
+  renderList();
 }
 function updateTotal(v){
   v.total = Number(v.laborCost||0)+Number(v.partsCost||0);
   document.getElementById('totalCost').value = v.total.toFixed(2);
   saveData();
+}
+
+function updateProgress(vehicle){
+  const idx = STAGES.indexOf(vehicle.stage);
+  const percent = idx >= 0 ? (idx / (STAGES.length - 1)) * 100 : 0;
+  const bar = document.getElementById('stageProgress');
+  if(bar){
+    bar.style.width = percent + '%';
+  }
 }
 function renderParts(vehicle){
   const list = document.getElementById('partsList');
