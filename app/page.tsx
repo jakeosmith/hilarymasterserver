@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Dashboard from '@/components/Reconditioning/Dashboard'
+import Dashboard from '../components/Reconditioning/Dashboard'
 
 export const metadata: Metadata = {
   title: 'Vehicle Reconditioning Tool',
