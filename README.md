@@ -106,4 +106,4 @@ MIT
 
 ## Reconditioning Tool
 
-The project defaults to a simple vehicle reconditioning tracker. Visit `/` to use it. The tool stores data in browser storage and offers VIN lookup, stage tracking, cost inputs, and parts management. Vehicles in the list highlight when selected, and the detail view shows a progress bar so operators can quickly gauge status. The static files live in `public/recon-tool`, but the homepage loads the tool directly so no additional path is required.
+The home page now features a React dashboard for tracking vehicles. Enter a VIN to decode its details, assign a stage, and manage parts and labor. All data is stored in browser localStorage.
