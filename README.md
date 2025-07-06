@@ -107,3 +107,5 @@ MIT
 ## Reconditioning Tool
 
 The home page now features a React dashboard for tracking vehicles. Enter a VIN to decode its details, assign a stage, and manage parts and labor. All data is stored in browser localStorage.
+
+The landing page greets visitors with **"Hi Jackson,"** before loading the dashboard.
